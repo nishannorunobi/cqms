@@ -2,9 +2,9 @@ package com.consumers.qms.model
 
 data class Appointment(
     val id:Int,
-    val consumerUserId : ConsumerUser,
-    val serviceProviderUserId : ServiceProviderUser,
+    val userId : User,
+    val serviceProviderId : ServiceProvider,
     val tokenNo : String,
-    val serialNo : Int
+    val serialNo : String
 
 )
