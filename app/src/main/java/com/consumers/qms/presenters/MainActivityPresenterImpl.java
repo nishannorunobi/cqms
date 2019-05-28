@@ -1,7 +1,6 @@
-package com.consumers.qms.presenter;
+package com.consumers.qms.presenters;
 
 import android.app.Activity;
-import android.content.Context;
 import com.consumers.qms.dao.repositories.FirestoreUserDao;
 import com.consumers.qms.dao.repositories.UserDao;
 import com.consumers.qms.model.User;
@@ -26,15 +25,15 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
 
     @Override
     public void login(String mobileNumber, String password) {
-        User user = new User();
-        user.setMobileNumber(mobileNumber);
-        user.setPassword(password);
-        userDao.save(user);
+
     }
 
     @Override
     public void register(String mobileNumber, String password) {
-
+        User user = new User();
+        user.setMobileNumber(mobileNumber);
+        user.setPassword(password);
+        userDao.save(user);
     }
 
     @Override

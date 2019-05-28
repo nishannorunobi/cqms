@@ -1,4 +1,4 @@
-package com.consumers.qms.presenter;
+package com.consumers.qms.presenters;
 
 import android.app.Activity;
 

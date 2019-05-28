@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.consumers.qms.model.User;
+import com.consumers.qms.utils.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -36,17 +37,18 @@ public class FirestoreUserDao implements UserDao {
     }
 
     @Override
-    public void save(User userObj) {
-        Map<String, Object> user = new HashMap<>();
+    public void save(final User userObj) {
+        final Map<String, Object> user = new HashMap<>();
         user.put("mobileNumber", userObj.getMobileNumber());
         user.put("password", userObj.getPassword());
 
-        db.collection("users")
+        db.collection(Constants.FirestoreCollections.USERS)
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        SharedPreferences sharedPreferences = context.getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor sharedPreferencesEdit = context.getApplicationContext().getSharedPreferences(Constants.SettingsKeys.PREF_NAME, MODE_PRIVATE).edit();
+                        sharedPreferencesEdit.putString(Constants.SettingsKeys.USER_MOBILE_NO, userObj.getMobileNumber());
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })

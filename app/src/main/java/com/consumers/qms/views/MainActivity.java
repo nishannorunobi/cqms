@@ -3,13 +3,14 @@ package com.consumers.qms.views;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.consumers.qms.R;
-import com.consumers.qms.presenter.MainActivityPresenter;
-import com.consumers.qms.presenter.MainActivityPresenterImpl;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.consumers.qms.presenters.MainActivityPresenter;
+import com.consumers.qms.presenters.MainActivityPresenterImpl;
+import com.consumers.qms.utils.Constants;
 
 class MainActivity extends AppCompatActivity implements View.OnClickListener {
     MainActivityPresenter mainActivityPresenter = MainActivityPresenterImpl.getInstance();
@@ -21,20 +22,19 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnRegister;
 
     String TAG = "MainActivity";
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    private static String PREF_NAME = "PREF_NAME";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
-        if (sharedPreferences.getString(PREF_NAME, null) == null) {
-            setContentView(R.layout.user_register);
-        } else {
-            setContentView(R.layout.activity_main);
+        SharedPreferences sharedPreferences = this.getApplicationContext().getSharedPreferences(Constants.SettingsKeys.PREF_NAME, MODE_PRIVATE);
+        String applicationData = sharedPreferences.getString(Constants.SettingsKeys.USER_MOBILE_NO, null);
+        if (applicationData != null) {
+            Log.w(TAG, "onCreate: efsdfsdfsdfdsfdsfds");
         }
+        setContentView(R.layout.user_register);
+
+
         findViews();
         mainActivityPresenter.setContext(this);
     }
@@ -68,5 +68,4 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener {
             );
         }
     }
-
 }
