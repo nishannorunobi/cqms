@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "84605361902-ls09p096mpkq83j7885b27rpavh1u2uv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.consumers.qms",
+            "certificate_hash": "ab9bbb6a71aa63a7ad034e35a8ad5d630d010c8b"
+          }
+        },
+        {
           "client_id": "84605361902-6k8fi55d1nfaml22m06fpa35fbghlhjo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
