@@ -1,7 +1,6 @@
 package com.consumers.qms.dao.repositories;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -49,6 +48,7 @@ public class FirestoreUserDao implements UserDao {
                     public void onSuccess(DocumentReference documentReference) {
                         SharedPreferences.Editor sharedPreferencesEdit = context.getApplicationContext().getSharedPreferences(Constants.SettingsKeys.PREF_NAME, MODE_PRIVATE).edit();
                         sharedPreferencesEdit.putString(Constants.SettingsKeys.USER_MOBILE_NO, userObj.getMobileNumber());
+                        sharedPreferencesEdit.apply();
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                     }
                 })

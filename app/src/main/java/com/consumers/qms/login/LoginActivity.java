@@ -1,19 +1,16 @@
-package com.consumers.qms.views;
+package com.consumers.qms.login;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.consumers.qms.R;
-import com.consumers.qms.presenters.MainActivityPresenter;
-import com.consumers.qms.presenters.MainActivityPresenterImpl;
-import com.consumers.qms.utils.Constants;
 
-class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    MainActivityPresenter mainActivityPresenter = MainActivityPresenterImpl.getInstance();
+public class LoginActivity
+        extends AppCompatActivity
+        implements View.OnClickListener{
+    LoginActivityPresenter loginActivityPresenter = LoginActivityPresenterImpl.getInstance();
 
     private EditText etMobile;
     private EditText etPassword;
@@ -21,22 +18,14 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnForgetPass;
     private Button btnRegister;
 
-    String TAG = "MainActivity";
+    String TAG = "LoginActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences sharedPreferences = this.getApplicationContext().getSharedPreferences(Constants.SettingsKeys.PREF_NAME, MODE_PRIVATE);
-        String applicationData = sharedPreferences.getString(Constants.SettingsKeys.USER_MOBILE_NO, null);
-        if (applicationData != null) {
-            Log.w(TAG, "onCreate: efsdfsdfsdfdsfdsfds");
-        }
         setContentView(R.layout.user_register);
-
-
         findViews();
-        mainActivityPresenter.setContext(this);
+        loginActivityPresenter.setContext(this);
     }
 
 
@@ -55,14 +44,14 @@ class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == btnLogin) {
-            mainActivityPresenter.login(
+            loginActivityPresenter.login(
                     etMobile.getText().toString().trim(),
                     etPassword.getText().toString().trim());
 
         } else if (v == btnForgetPass) {
             // Handle clicks for button2
         } else if (v == btnRegister) {
-            mainActivityPresenter.register(
+            loginActivityPresenter.register(
                     etMobile.getText().toString().trim(),
                     etPassword.getText().toString().trim()
             );
