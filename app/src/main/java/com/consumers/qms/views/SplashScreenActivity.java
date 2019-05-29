@@ -13,6 +13,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_layout);
         SharedPreferences sharedPreferences = this.getApplicationContext().getSharedPreferences(Constants.SettingsKeys.PREF_NAME, MODE_PRIVATE);
