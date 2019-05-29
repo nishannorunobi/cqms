@@ -1,4 +1,4 @@
-package com.consumers.qms.login;
+package com.consumers.qms.features.login;
 
 import android.app.Activity;
 
@@ -7,5 +7,4 @@ public interface LoginActivityPresenter {
     void login(String mobileNumber,String password);
     void register(String mobileNumber,String password);
     void forgetPassword(String mobileNumber);
-    void notifySuccessfulRegistration(String userId);
 }

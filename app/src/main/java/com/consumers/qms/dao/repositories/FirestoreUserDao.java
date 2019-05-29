@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import com.consumers.qms.asyntask.ActionPerformCallBack;
+import com.consumers.qms.asyntask.DbActionSuccessCallback;
 import com.consumers.qms.model.User;
 import com.consumers.qms.utils.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,7 +22,7 @@ public class FirestoreUserDao implements UserDao {
     private static final String TAG = FirebaseFirestore.class.getName();
     private Activity context = null;
     private static FirestoreUserDao userDao;
-
+    DbActionSuccessCallback dbActionSuccessCallback;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public static UserDao getInstance() {
@@ -28,11 +30,6 @@ public class FirestoreUserDao implements UserDao {
             userDao = new FirestoreUserDao();
         }
         return userDao;
-    }
-
-    @Override
-    public void setContext(Activity context) {
-        this.context = context;
     }
 
     @Override
@@ -46,10 +43,10 @@ public class FirestoreUserDao implements UserDao {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        SharedPreferences.Editor sharedPreferencesEdit = context.getApplicationContext().getSharedPreferences(Constants.SettingsKeys.PREF_NAME, MODE_PRIVATE).edit();
-                        sharedPreferencesEdit.putString(Constants.SettingsKeys.USER_MOBILE_NO, userObj.getMobileNumber());
+                        SharedPreferences.Editor sharedPreferencesEdit = context.getApplicationContext().getSharedPreferences(Constants.Preferences.PREF_NAME, MODE_PRIVATE).edit();
+                        sharedPreferencesEdit.putString(Constants.Preferences.USER_ID, userObj.getMobileNumber());
                         sharedPreferencesEdit.apply();
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        dbActionSuccessCallback.confirmUserRegister(documentReference.getId(),context);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -73,5 +70,11 @@ public class FirestoreUserDao implements UserDao {
     @Override
     public User getById(String id) {
         return new User();
+    }
+
+    @Override
+    public void setContext(Activity activity,ActionPerformCallBack callback) {
+        this.context = activity;
+        dbActionSuccessCallback = (DbActionSuccessCallback) callback;
     }
 }

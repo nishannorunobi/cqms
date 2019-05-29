@@ -1,4 +1,4 @@
-package com.consumers.qms.login;
+package com.consumers.qms.features.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

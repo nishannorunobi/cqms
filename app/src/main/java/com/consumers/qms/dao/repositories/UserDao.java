@@ -3,8 +3,7 @@ package com.consumers.qms.dao.repositories;
 import android.app.Activity;
 import com.consumers.qms.model.User;
 
-public interface UserDao {
-    void setContext(Activity context);
+public interface UserDao extends CommonDao {
 
     void save(User user);
 

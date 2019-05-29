@@ -8,8 +8,8 @@ public interface Constants {
         String DEVICES = "devices";
     }
 
-    interface SettingsKeys{
+    interface Preferences {
         String PREF_NAME = "PREF_NAME";
-        String USER_MOBILE_NO = "USER_MOBILE_NO";
+        String USER_ID = "USER_ID";
     }
 }

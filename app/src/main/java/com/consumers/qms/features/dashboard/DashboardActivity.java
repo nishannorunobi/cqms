@@ -1,4 +1,4 @@
-package com.consumers.qms.views;
+package com.consumers.qms.features.login.dashboard;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
