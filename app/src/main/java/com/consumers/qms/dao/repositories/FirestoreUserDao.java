@@ -1,29 +1,22 @@
 package com.consumers.qms.dao.repositories;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.consumers.qms.asyntask.ActionPerformCallBack;
-import com.consumers.qms.asyntask.DbActionSuccessCallback;
 import com.consumers.qms.model.User;
+import com.consumers.qms.services.OnEventListener;
 import com.consumers.qms.utils.Constants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class FirestoreUserDao implements UserDao {
     private static final String TAG = FirebaseFirestore.class.getName();
-    private Activity context = null;
     private static FirestoreUserDao userDao;
-    DbActionSuccessCallback dbActionSuccessCallback;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference users = db.collection(Constants.FirestoreCollections.USERS);
 
     public static UserDao getInstance() {
         if (userDao == null) {
@@ -33,20 +26,16 @@ public class FirestoreUserDao implements UserDao {
     }
 
     @Override
-    public void save(final User userObj) {
+    public void save(User userObj, final OnEventListener onEventListener) {
         final Map<String, Object> user = new HashMap<>();
         user.put("mobileNumber", userObj.getMobileNumber());
         user.put("password", userObj.getPassword());
 
-        db.collection(Constants.FirestoreCollections.USERS)
-                .add(user)
+        users.add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        SharedPreferences.Editor sharedPreferencesEdit = context.getApplicationContext().getSharedPreferences(Constants.Preferences.PREF_NAME, MODE_PRIVATE).edit();
-                        sharedPreferencesEdit.putString(Constants.Preferences.USER_ID, userObj.getMobileNumber());
-                        sharedPreferencesEdit.apply();
-                        dbActionSuccessCallback.confirmUserRegister(documentReference.getId(),context);
+                        onEventListener.fire(documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -58,23 +47,44 @@ public class FirestoreUserDao implements UserDao {
     }
 
     @Override
-    public void update(User user) {
-
+    public void update(final User userObj, final OnEventListener onEventListener) {
+        final Map<String, Object> user = new HashMap<>();
+        user.put("password", userObj.getPassword());
+        users.document(userObj.getId())
+                .update(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onEventListener.fire(userObj.getId());
+                    }
+                });
     }
 
     @Override
-    public User getByMobileNo(String mobileNumber) {
+    public void getByMobileNo(final String mobileNumber, final OnEventListener onEventListener) {
+        Query query = users.whereEqualTo("mobileNumber", mobileNumber);
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            String userId = null;
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (queryDocumentSnapshots.isEmpty()) {
+                    Log.w(TAG, "onSuccess: no user documents found by mobile number {}" + mobileNumber);
+                } else {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        if (userId == null) {
+                            userId = documentSnapshot.getId();
+                        } else {
+                            users.document(documentSnapshot.getId()).delete();
+                        }
+                    }
+                }
+                onEventListener.fire(userId);
+            }
+        });
+    }
+
+    @Override
+    public User getById(String id, OnEventListener onEventListener) {
         return new User();
-    }
-
-    @Override
-    public User getById(String id) {
-        return new User();
-    }
-
-    @Override
-    public void setContext(Activity activity,ActionPerformCallBack callback) {
-        this.context = activity;
-        dbActionSuccessCallback = (DbActionSuccessCallback) callback;
     }
 }

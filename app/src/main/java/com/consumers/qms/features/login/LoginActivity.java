@@ -9,7 +9,7 @@ import com.consumers.qms.R;
 
 public class LoginActivity
         extends AppCompatActivity
-        implements View.OnClickListener{
+        implements View.OnClickListener {
     LoginActivityPresenter loginActivityPresenter = LoginActivityPresenterImpl.getInstance();
 
     private EditText etMobile;
@@ -25,7 +25,6 @@ public class LoginActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_register);
         findViews();
-        loginActivityPresenter.setContext(this);
     }
 
 
@@ -46,14 +45,16 @@ public class LoginActivity
         if (v == btnLogin) {
             loginActivityPresenter.login(
                     etMobile.getText().toString().trim(),
-                    etPassword.getText().toString().trim());
+                    etPassword.getText().toString().trim(),
+                    this);
 
         } else if (v == btnForgetPass) {
             // Handle clicks for button2
         } else if (v == btnRegister) {
             loginActivityPresenter.register(
                     etMobile.getText().toString().trim(),
-                    etPassword.getText().toString().trim()
+                    etPassword.getText().toString().trim(),
+                    this
             );
         }
     }

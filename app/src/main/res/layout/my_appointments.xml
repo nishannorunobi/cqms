@@ -5,36 +5,14 @@
               android:paddingLeft="16dp"
               android:paddingRight="16dp"
               android:orientation="vertical">
-
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:id="@+id/etMobile"
-            android:hint="mobile number"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/etPassword"
-            android:hint="password"/>
     <Button
-            android:text="Login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnLogin"/>
-    <Button
-            android:text="Forget Password"
-            android:layout_width="101dp"
-            android:layout_height="45dp"
-            android:id="@+id/btnForgetPass"
-            android:textSize="8dp"/>
-    <Button
-            android:text="new member"
-            android:layout_width="210dp"
+            android:text="Make More Appointments"
+            android:layout_width="match_parent"
             android:layout_height="39dp"
             android:id="@+id/btnRegister"
             android:textSize="9dp"/>
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 </LinearLayout>

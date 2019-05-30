@@ -1,11 +1,11 @@
 package com.consumers.qms.services;
 
-import android.app.Activity;
-import android.drm.DrmStore;
-import com.consumers.qms.asyntask.ActionPerformCallBack;
+import android.util.Log;
 import com.consumers.qms.dao.repositories.FirestoreUserDao;
 import com.consumers.qms.dao.repositories.UserDao;
 import com.consumers.qms.model.User;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class UserServiceImpl implements UserService {
     private static UserService userService = null;
@@ -19,12 +19,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void storeUser(User user) {
-        userDao.save(user);
+    public void storeUser(User user, OnEventListener onEventListener) {
+        userDao.save(user, onEventListener);
     }
 
     @Override
-    public void setContext(Activity activity, ActionPerformCallBack callback) {
-        this.userDao.setContext(activity, callback);
+    public void updateUser(User user, OnEventListener onEventListener) {
+        userDao.update(user, onEventListener);
+    }
+
+    @Override
+    public void getUserByMobileNumber(String mobileNumber, final OnEventListener onEventListener) {
+        userDao.getByMobileNo(mobileNumber, onEventListener);
     }
 }

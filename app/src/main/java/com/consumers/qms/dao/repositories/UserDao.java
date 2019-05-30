@@ -1,15 +1,15 @@
 package com.consumers.qms.dao.repositories;
 
-import android.app.Activity;
 import com.consumers.qms.model.User;
+import com.consumers.qms.services.OnEventListener;
 
-public interface UserDao extends CommonDao {
+public interface UserDao{
 
-    void save(User user);
+    void save(User user,OnEventListener onEventListener);
 
-    void update(User user);
+    void update(User user,OnEventListener onEventListener);
 
-    User getByMobileNo(String mobileNumber);
+    void getByMobileNo(String mobileNumber, OnEventListener onEventListener);
 
-    User getById(String id);
+    User getById(String id, OnEventListener onEventListener);
 }

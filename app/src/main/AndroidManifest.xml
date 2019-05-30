@@ -12,7 +12,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".views.SplashScreenActivity">
+        <activity android:name=".features.splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -20,11 +20,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".features.login.dashboard.DashboardActivity"
-                  android:parentActivityName=".views.SplashScreenActivity"></activity>
+        <activity android:name=".features.dashboard.DashboardActivity"
+                  android:label="My Appointments"
+                  android:parentActivityName=".features.splash.SplashScreenActivity"></activity>
 
         <activity android:name=".features.login.LoginActivity"
-                  android:parentActivityName=".views.SplashScreenActivity"></activity>
+                  android:label="Sign Up / Sign In"
+                  android:parentActivityName=".features.splash.SplashScreenActivity"></activity>
+
+        <activity android:name=".features.appointment.AppointmentActivity"
+        android:label="Make Appointment"></activity>
+
+        <activity android:name=".features.appointment.SpSearchActivity"
+                  android:label="Find Service Provider"></activity>
 
     </application>
 

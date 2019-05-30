@@ -1,8 +1,7 @@
 package com.consumers.qms.dao.repositories;
 
-import android.app.Activity;
-import com.consumers.qms.asyntask.ActionPerformCallBack;
+import com.consumers.qms.services.OnEventListener;
 
 public interface CommonDao {
-    void setContext(Activity activity, ActionPerformCallBack callback);
+    void addOnEventListener(OnEventListener onEventListener);
 }
